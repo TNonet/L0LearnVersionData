@@ -34,20 +34,23 @@ createL0LearnVersionData <- function(){
     for (intercept in c(TRUE, FALSE)){
         for (penalty in c("\"L0\"", "\"L0L1\"", "\"L0L2\"")){
             for (algorithm in c("\"CD\"", "\"CDPSI\"")){
-                i = i+1
-                tests[[i]] = paste("set.seed(1); L0Learn.fit(data$X, data$y, loss=\"SquaredError\", penalty="
-                                   , penalty, ", intercept=",intercept,
-                                   ", algorithm=", algorithm, ")", sep='')
                 
-                i = i+1
-                tests[[i]] = paste("set.seed(1); L0Learn.fit(data$X, sign(data$y), loss='Logistic', penalty=",
-                                   penalty, ", intercept=", intercept,
-                                   ", algorithm=", algorithm, ")", sep='')
-                
-                i = i+1
-                tests[[i]] = paste("set.seed(1); L0Learn.fit(data$X, sign(data$y), loss='SquaredHinge', penalty=",
-                                   penalty, ", intercept=", intercept,
-                                   ", algorithm=", algorithm, ")", sep='')
+                if (currentVersion != "1.2.0" || intercept){
+                    i = i+1
+                    tests[[i]] = paste("set.seed(1); L0Learn.fit(data$X, data$y, loss=\"SquaredError\", penalty="
+                                       , penalty, ", intercept=",intercept,
+                                       ", algorithm=", algorithm, ")", sep='')
+                    
+                    i = i+1
+                    tests[[i]] = paste("set.seed(1); L0Learn.fit(data$X, sign(data$y), loss='Logistic', penalty=",
+                                       penalty, ", intercept=", intercept,
+                                       ", algorithm=", algorithm, ")", sep='')
+                    
+                    i = i+1
+                    tests[[i]] = paste("set.seed(1); L0Learn.fit(data$X, sign(data$y), loss='SquaredHinge', penalty=",
+                                       penalty, ", intercept=", intercept,
+                                       ", algorithm=", algorithm, ")", sep='')
+                }
             }
         }
     }
